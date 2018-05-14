@@ -54,4 +54,18 @@ public class MyUtilities {
         }
         return result;
     }
+
+    static public String EncodeJSON(HashMap<String, String> toEncode) throws UnsupportedEncodingException {
+        String result = "{";
+        Iterator it = toEncode.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            result += "\"" + pair.getKey().toString() + "\" :"
+                    + "\"" + pair.getValue().toString() + "\"";
+            if (it.hasNext())
+                result += ",";
+            it.remove();
+        }
+        return result + "}";
+    }
 }

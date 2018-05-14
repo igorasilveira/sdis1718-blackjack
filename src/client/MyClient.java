@@ -1,6 +1,7 @@
 package client;
 
 import com.MyUtilities;
+import sun.misc.BASE64Encoder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -17,28 +18,31 @@ public class MyClient {
         parametersMap.put("test", "name");
         parametersMap.put("another", "pass asda asd");
         System.out.println("Map size: " + parametersMap.size());
-        String parameters = null;
-        try {
-            parameters = MyUtilities.EncodeQuery(parametersMap);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        String x = executeGet("http://localhost:8080/func1", parameters);
-        System.out.println("GET SENT\nresponse: " + x);
-        //x = executePost("http://localhost:8080/func1", parameters);
-        System.out.println("POST SENT");
+        //String x = executeGet("http://localhost:8080/func1", parametersMap);
+        //System.out.println("GET SENT\nresponse: " + x);
+        String x = executePut("http://localhost:8080/func1", parametersMap);
+        //String x = executePost("http://localhost:8080/func1", parametersMap);
+        //System.out.println("POST SENT");
+        //System.out.println("reponse: " +  x);
+
+
     }
 
-    public static String executeGet(String targetURL, String urlParameters) {
+    public static String executeGet(String targetURL, HashMap parameters) {
         HttpURLConnection connection = null;
 
         try {
             //Create connection
+
+            String urlParameters = MyUtilities.EncodeQuery(parameters);
             URL url = new URL(targetURL + "?" + urlParameters);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Accept-Charset", "UTF-8");
+            connection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
 
             connection.setUseCaches(false);
+            connection.setDoOutput(false);
 
             //Get Response
             InputStream is = connection.getInputStream();
@@ -61,7 +65,7 @@ public class MyClient {
         }
     }
 
-    public static String executePost(String targetURL, String urlParameters) {
+    public static String executePost(String targetURL, HashMap parameters) {
         HttpURLConnection connection = null;
 
         try {
@@ -70,10 +74,18 @@ public class MyClient {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
+                    "application/json");
+
+            BASE64Encoder enc = new sun.misc.BASE64Encoder();
+            String userpassword = "username" + ":" + "password";
+            String encodedAuthorization = enc.encode( userpassword.getBytes() );
+            connection.setRequestProperty("Authorization", "Basic "+
+                    encodedAuthorization);
+
+            String jsonParameters = MyUtilities.EncodeJSON(parameters);
 
             connection.setRequestProperty("Content-Length",
-                    Integer.toString(urlParameters.getBytes().length));
+                    Integer.toString(jsonParameters.getBytes().length));
             connection.setRequestProperty("Content-Language", "en-US");
 
             connection.setUseCaches(false);
@@ -82,7 +94,60 @@ public class MyClient {
             //Send request
             DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream());
-            wr.writeBytes(urlParameters);
+            wr.writeBytes(jsonParameters);
+            wr.close();
+
+            //Get Response
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            StringBuffer response = new StringBuffer(); // or StringBuffer if Java version 5+
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    public static String executePut(String targetURL, HashMap parameters) {
+        HttpURLConnection connection = null;
+
+        try {
+            //Create connection
+            URL url = new URL(targetURL);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setRequestProperty("Content-Type",
+                    "application/json");
+
+            BASE64Encoder enc = new sun.misc.BASE64Encoder();
+            String userpassword = "username" + ":" + "password";
+            String encodedAuthorization = enc.encode( userpassword.getBytes() );
+            connection.setRequestProperty("Authorization", "Basic "+
+                    encodedAuthorization);
+
+            String jsonParameters = MyUtilities.EncodeJSON(parameters);
+
+            connection.setRequestProperty("Content-Length",
+                    Integer.toString(jsonParameters.getBytes().length));
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            connection.setUseCaches(false);
+            connection.setDoOutput(true);
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream (
+                    connection.getOutputStream());
+            wr.writeBytes(jsonParameters);
             wr.close();
 
             //Get Response
