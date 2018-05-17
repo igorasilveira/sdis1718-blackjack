@@ -1,5 +1,6 @@
 package client;
 
+import beans.MyPlayer;
 import com.MyUtilities;
 import sun.misc.BASE64Encoder;
 
@@ -9,10 +10,12 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class MyClient {
+    private static final int MAX_TRIES = 3;
 
-    public void run() {
+   /* public void run() {
         HashMap<String, String> parametersMap = new HashMap<>();
         parametersMap.put("test", "name");
         parametersMap.put("another", "pass asda asd");
@@ -23,6 +26,129 @@ public class MyClient {
         //System.out.println("POST SENT");
         //System.out.println("reponse: " +  x);
 
+    }*/
+
+    public void run() {
+        mainMenu();
+    }
+
+    public void mainMenu() {
+
+        try (Scanner scanner = new Scanner(System.in)) {
+            final int mainMenuSelection = MyUtilities.askUserForNumberInput(scanner, "> 1 - login\n> 2 - register\n> 3 - exit", 3);
+            switch (mainMenuSelection) {
+                case 1:
+                    login();
+                    break;
+                case 2:
+                    register();
+                    break;
+                case 3:
+                    return;
+            }
+        }
+    }
+
+    private void login() {
+        boolean logged = false;
+        try (Scanner scanner = new Scanner(System.in)) {
+            String username = scanner.next();
+            String password = scanner.next();
+            password = MyUtilities.sha256(password);
+
+            //MyPlayer loginUser = new MyPlayer(username, password);
+            MyPlayer loginUser = new MyPlayer();
+
+            int tries = 0;
+            boolean success = false;
+
+            while (tries < MAX_TRIES && !success) {
+                System.out.println("Sending request");
+                logged = loginUser(loginUser);
+                success = true;
+            }
+
+            if (tries == MAX_TRIES) {
+                mainMenu();
+            }
+
+        }
+
+        if (logged) {
+            System.out.println("logged in successfully");
+        } else {
+            System.out.println("not logged in");
+            login();
+        }
+    }
+
+    private boolean loginUser(MyPlayer myUser) {
+        //TODO authenticate using general user info for access
+
+        //TODO send request with myUser info for login attempt and override current on success
+
+        return false;
+    }
+
+    public void register() {
+        boolean registered = false;
+        try (Scanner scanner = new Scanner(System.in)) {
+            boolean isValid = false;
+            String username;
+            String password;
+            String confirmPassword;
+
+
+            while (!isValid) {
+                System.out.print("Enter Username >");
+                username = scanner.next();
+                System.out.print("Enter Password >");
+                password = scanner.next();
+                System.out.print("Confirm Password >");
+                confirmPassword = scanner.next();
+
+                if (password.equals(confirmPassword)) {
+
+                    if (password.length() > 7) {
+                        password = MyUtilities.sha256(password);
+
+                        int tries = 0;
+                        boolean success = false;
+
+                        while (tries < MAX_TRIES && !success) {
+                            System.out.println("Sending request");
+                            registered = createUser(username, password);
+                            success = true;
+                            isValid = true;
+                        }
+
+                        if (tries == MAX_TRIES) {
+                            mainMenu();
+                        }
+
+                    } else
+                        System.out.println("The password should be at least 8 characters long");
+
+                } else
+                    System.out.println("Passwords do not match");
+            }
+
+            if (registered)
+                System.out.println("Registered Successfully!");
+            else {
+                System.out.println("An error occurred, try again!");
+                register();
+            }
+        }
+    }
+
+    public boolean createUser(String username, String password) {
+
+        //TODO authenticate using general user info for access
+
+        //TODO send new MyUser object with username and password to attempt and override current on success
+
+        return false;
     }
 
     public String executeGet(String targetURL, HashMap parameters) {
@@ -63,7 +189,7 @@ public class MyClient {
                 /* Create JSON object from the created string */
                 JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
                 JsonObject jsonObject = jsonReader.readObject();
-                return  jsonObject.toString().;
+                return jsonObject.toString();
             }
 
             return "ERROR";
