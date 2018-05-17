@@ -3,9 +3,12 @@ package server;
 import com.MyUtilities;
 import com.sun.net.httpserver.*;
 
+import javax.json.*;
 import java.io.*;
 import java.net.Authenticator;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -14,8 +17,6 @@ public class MyServer {
     private static final String HOSTNAME = "localhost";
     private int port = 8080;
     private static final int BACKLOG = 1;
-
-    private static BasicAuthenticator basicAuthenticator;
 
     private static final String HEADER_ALLOW = "Allow";
     private static final String HEADER_CONTENT_TYPE = "Content-Type";
@@ -40,23 +41,21 @@ public class MyServer {
         server = HttpServer.create(new InetSocketAddress(HOSTNAME, this.port), BACKLOG);
 
         createContexts();
-        basicAuthenticator = new BasicAuthenticator(METHOD_GET) {
-            @Override
-            public boolean checkCredentials(String s, String s1) {
-                return false;
-            }
-        };
+
+        String user= "user";
+        String password= "user";
 
     }
 
     public void start() {
         server.setExecutor(null);
         server.start();
+        System.out.println("Server running...");
     }
 
     public void createContexts() {
-        server.createContext("/", new RootHandler()).setAuthenticator(basicAuthenticator);
-        server.createContext("/func1", he -> {
+        server.createContext("/", new RootHandler());
+        HttpContext hc1 = server.createContext("/func1", he -> {
             try {
                 final Headers headers = he.getResponseHeaders();
                 final String requestMethod = he.getRequestMethod().toUpperCase();
@@ -80,11 +79,16 @@ public class MyServer {
                         MyUtilities.DecodeQuery(he.getRequestURI(), results);
                         String finalResponse = "";
                         Iterator it = results.entrySet().iterator();
+                        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
                             finalResponse += pair.getKey().toString() + "=" + pair.getValue().toString();
+                            jsonObjectBuilder.add(pair.getKey().toString(), pair.getValue().toString());
                             it.remove();
                         }
+                        jsonObjectBuilder.add("Success", JsonValue.TRUE);
+                        JsonObject jsonObject = jsonObjectBuilder.build();
+                        finalResponse = jsonObject.toString();
                         he.sendResponseHeaders(STATUS_OK, finalResponse.getBytes().length);
                         he.getResponseBody().write(finalResponse.getBytes());
                         break;
@@ -115,7 +119,17 @@ public class MyServer {
             } finally {
                 he.close();
             }
-        }).setAuthenticator(basicAuthenticator);
+        });
+
+        hc1.setAuthenticator(new BasicAuthenticator("GET") {
+            @Override
+            public boolean checkCredentials(String username, String password) {
+                System.out.println("Authenticating...");
+                System.out.println("Username: " + username);
+                System.out.println("Passoword: " + password);
+                return username.equals("username") && password.equals("password");
+            }
+        });
     }
 
     public class RootHandler implements HttpHandler {

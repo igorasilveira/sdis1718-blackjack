@@ -4,31 +4,28 @@ import com.MyUtilities;
 import sun.misc.BASE64Encoder;
 
 import javax.json.*;
-import javax.net.ssl.HttpsURLConnection;
+import javax.json.stream.JsonParser;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class MyClient {
 
-    public static void main(String[] args) {
+    public void run() {
         HashMap<String, String> parametersMap = new HashMap<>();
         parametersMap.put("test", "name");
         parametersMap.put("another", "pass asda asd");
         System.out.println("Map size: " + parametersMap.size());
-        //String x = executeGet("http://localhost:8080/func1", parametersMap);
-        //System.out.println("GET SENT\nresponse: " + x);
-        String x = executePut("http://localhost:8080/func1", parametersMap);
+        String x = executeGet("http://localhost:8080/func1", parametersMap);
+        System.out.println("GET SENT\nresponse: " + x);
         //String x = executePost("http://localhost:8080/func1", parametersMap);
         //System.out.println("POST SENT");
         //System.out.println("reponse: " +  x);
 
-
     }
 
-    public static String executeGet(String targetURL, HashMap parameters) {
+    public String executeGet(String targetURL, HashMap parameters) {
         HttpURLConnection connection = null;
 
         try {
@@ -41,20 +38,35 @@ public class MyClient {
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
 
+            BASE64Encoder enc = new sun.misc.BASE64Encoder();
+            String userpassword = "username" + ":" + "password";
+            String encodedAuthorization = enc.encode( userpassword.getBytes() );
+            connection.setRequestProperty("Authorization", "Basic "+
+                    encodedAuthorization);
+
             connection.setUseCaches(false);
             connection.setDoOutput(false);
 
-            //Get Response
-            InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            StringBuffer response = new StringBuffer(); // or StringBuffer if Java version 5+
-            String line;
-            while ((line = rd.readLine()) != null) {
-                response.append(line);
-                response.append('\r');
+            if (connection.getResponseCode() == 200) {
+
+                /* Get Server response to string */
+                InputStream is = connection.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                StringBuffer response = new StringBuffer(); // or StringBuffer if Java version 5+
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    response.append(line);
+                    response.append('\r');
+                }
+                rd.close();
+
+                /* Create JSON object from the created string */
+                JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
+                JsonObject jsonObject = jsonReader.readObject();
+                return  jsonObject.toString().;
             }
-            rd.close();
-            return response.toString();
+
+            return "ERROR";
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -65,7 +77,7 @@ public class MyClient {
         }
     }
 
-    public static String executePost(String targetURL, HashMap parameters) {
+    public String executePost(String targetURL, HashMap parameters) {
         HttpURLConnection connection = null;
 
         try {
@@ -118,7 +130,7 @@ public class MyClient {
         }
     }
 
-    public static String executePut(String targetURL, HashMap parameters) {
+    public String executePut(String targetURL, HashMap parameters) {
         HttpURLConnection connection = null;
 
         try {
