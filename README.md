@@ -1,13 +1,9 @@
 # Implementations List
 
 - [ ] **Full Project**
-   - [ ] **TCP**
-     - [ ] Connect
-     - [ ] Trade Messages
    - [ ] **CLASSES**
-     - [ ] com.service
-       - [ ] com.service Thread
-     - [ ] com.client.com.client
+     - [ ] Server
+     - [ ] Client
      - [ ] Table
      - [ ] Player??
      - [ ] Deck (*of cards*)
