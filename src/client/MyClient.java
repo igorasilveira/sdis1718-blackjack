@@ -3,13 +3,13 @@ package client;
 import com.MyUtilities;
 import sun.misc.BASE64Encoder;
 
+import javax.json.*;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MyClient {
 
