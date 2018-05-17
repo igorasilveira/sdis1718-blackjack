@@ -6,14 +6,41 @@ public class MyCard  {
             CLUBS, DIAMONDS, HEARTS, SPADES
     }
 
-    private final String value;   // 1,2,3,4..., J,Q,K,A
-    private final Suit suit;    // naipe
+
+    private String value;   // 1,2,3,4..., J,Q,K,A
+    private Suit suit;    // naipe
     private int cost;
 
-    public MyCard(String value, Suit suit){
-        this.value = value;
+    public MyCard(int value, Suit suit){
+        parseValue(value);
         this.suit = suit;
         setCost();
+    }
+
+    private void parseValue(int value) {
+
+        if(value < 1 || value > 13){
+            System.out.println("Couldn't create card as it does not contain a valid value.");
+            return;
+        }
+
+        switch(value){
+            case 1:
+                this.value = "A";
+                break;
+            case 11:
+                this.value = "J";
+                break;
+            case 12:
+                this.value = "Q";
+                break;
+            case 13:
+                this.value = "K";
+                break;
+            default:
+                this.value = String.valueOf(value);
+                break;
+        }
     }
 
     private void setCost(){
@@ -25,6 +52,7 @@ public class MyCard  {
             }
             else{
                 System.out.println("Error: The card value must be between 2 ad 10");
+                return;
             }
         } catch(NumberFormatException e){
             cost = 10;
