@@ -35,7 +35,7 @@ public class MyClientApp {
                 System.exit(1);
             }
 
-            MyClient client = new MyClient();
+            MyClient client = new MyClient(hostIP, hostPort);
             client.run();
 
         } catch (IOException e) {

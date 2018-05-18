@@ -2,6 +2,7 @@ package client;
 
 import beans.MyPlayer;
 import com.MyUtilities;
+import server.MyPasswords;
 import sun.misc.BASE64Encoder;
 
 import javax.json.*;
@@ -9,28 +10,41 @@ import javax.json.stream.JsonParser;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 public class MyClient {
     private static final int MAX_TRIES = 3;
+    private static String hostIP;
+    private static int hostPort = 8080;
 
-   /* public void run() {
+    public MyClient(String hIP, int port) {
+        hostIP = hIP;
+        hostPort = port;
+    }
+
+    public void run() throws UnsupportedEncodingException {
         HashMap<String, String> parametersMap = new HashMap<>();
         parametersMap.put("test", "name");
         parametersMap.put("another", "pass asda asd");
         System.out.println("Map size: " + parametersMap.size());
-        String x = executeGet("http://localhost:8080/func1", parametersMap);
-        System.out.println("GET SENT\nresponse: " + x);
-        //String x = executePost("http://localhost:8080/func1", parametersMap);
+        //String x = executeGet("http://localhost:8080/func1", parametersMap);
+        //System.out.println("GET SENT\nresponse: " + x);
+        //String x = executePost("http://localhost:8080/users", parametersMap);
         //System.out.println("POST SENT");
         //System.out.println("reponse: " +  x);
 
-    }*/
+        System.out.println("sending create user");
+        System.out.println(createUser("username", "password"));
+        System.out.println("sent");
 
-    public void run() {
-        mainMenu();
     }
+
+    /*public void run() throws UnsupportedEncodingException {
+        mainMenu();
+    }*/
 
     public void mainMenu() {
 
@@ -53,11 +67,9 @@ public class MyClient {
         boolean logged = false;
         try (Scanner scanner = new Scanner(System.in)) {
             String username = scanner.next();
-            String password = scanner.next();
-            password = MyUtilities.sha256(password);
+            String password = MyUtilities.sha256(scanner.next());
 
-            //MyPlayer loginUser = new MyPlayer(username, password);
-            MyPlayer loginUser = new MyPlayer();
+            MyPlayer loginUser = new MyPlayer(username, password);
 
             int tries = 0;
             boolean success = false;
@@ -144,10 +156,54 @@ public class MyClient {
 
     public boolean createUser(String username, String password) {
 
-        //TODO authenticate using general user info for access
+        HttpURLConnection connection = null;
 
-        //TODO send new MyUser object with username and password to attempt and override current on success
+        try {
+            //Create connection
+            URL url = new URL("http://" + hostIP + ":" + hostPort + "/users");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type",
+                    "application/json");
 
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("username", username);
+            parameters.put("password", password);
+
+            BASE64Encoder enc = new sun.misc.BASE64Encoder();
+            String userpassword = "guest" + ":" + "guest";
+            String encodedAuthorization = enc.encode( userpassword.getBytes() );
+            connection.setRequestProperty("Authorization", "Basic "+
+                    encodedAuthorization);
+
+            String jsonParameters = MyUtilities.EncodeJSON(parameters);
+
+            connection.setRequestProperty("Content-Length",
+                    Integer.toString(jsonParameters.getBytes().length));
+            connection.setRequestProperty("Content-Language", "en-US");
+
+            connection.setUseCaches(false);
+            connection.setDoOutput(true);
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream (
+                    connection.getOutputStream());
+            wr.writeBytes(jsonParameters);
+            wr.close();
+
+            //Get Response
+            if (connection.getResponseCode() == 201) {
+                System.out.println("Received CREATED");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
         return false;
     }
 
@@ -165,7 +221,7 @@ public class MyClient {
                     "application/x-www-form-urlencoded");
 
             BASE64Encoder enc = new sun.misc.BASE64Encoder();
-            String userpassword = "username" + ":" + "password";
+            String userpassword = "guest" + ":" + "guest";
             String encodedAuthorization = enc.encode( userpassword.getBytes() );
             connection.setRequestProperty("Authorization", "Basic "+
                     encodedAuthorization);
@@ -215,7 +271,7 @@ public class MyClient {
                     "application/json");
 
             BASE64Encoder enc = new sun.misc.BASE64Encoder();
-            String userpassword = "username" + ":" + "password";
+            String userpassword = "guest" + ":" + "guest";
             String encodedAuthorization = enc.encode( userpassword.getBytes() );
             connection.setRequestProperty("Authorization", "Basic "+
                     encodedAuthorization);
