@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="javax.json-1.0">
+  <library name="derby">
     <CLASSES>
-      <root url="jar://D:/Coding/javax.json-1.0.jar!/" />
+      <root url="jar://C:/Program Files/Java/jdk1.8.0_161/db/lib/derby.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

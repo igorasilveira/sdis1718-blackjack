@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -67,5 +68,39 @@ public class MyUtilities {
             it.remove();
         }
         return result + "}";
+    }
+
+    // int minValue may also be defined if necessary
+    public static int askUserForNumberInput(Scanner scanner, String prompt, int maxValue) {
+        System.out.println("Please choose an option\n");
+        System.out.println(prompt);
+        System.out.println("-----------------------");
+        int value = scanner.nextInt();
+        while (value < 1 || value > maxValue) {
+            System.out.println("\n\n[ERROR] Invalid choice, please try again\n");
+            System.out.println("\n> ");
+            // java.util.InputMismatchException should also be caught
+            // to intercept non-numeric input
+            value = scanner.nextInt();
+        }
+        return value;
+    }
+
+    public static String sha256(String base) {
+        try{
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 }
