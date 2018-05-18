@@ -3,7 +3,8 @@ package server;
 import java.sql.*;
 
 public class MyDatabase {
-    private static String dbURL = "jdbc:derby:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db";
+//    private static String dbURL = "jdbc:derby:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db";
+    private static String dbURL = "jdbc:derby:D:/Data/GitHub/sdis1718-blackjack/db";
     // jdbc Connection
     private static Connection conn = null;
     private static Statement stmt = null;
@@ -25,21 +26,30 @@ public class MyDatabase {
         }
     }
 
-    public static boolean insertUser(String username, byte[] password, byte[] hash)
+    public static int insertUser(String username, byte[] password, byte[] hash)
     {
         try
         {
-            PreparedStatement stmt = conn.prepareStatement("INSERT into  USERS_TABLE(USERNAME, PASSWORD, SALT) values (? ,?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("SELECT ID FROM USERS_TABLE WHERE USERNAME = ?");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next())
+                return 1;
+
+            stmt = conn.prepareStatement("INSERT into  USERS_TABLE(USERNAME, PASSWORD, SALT) values (? ,?, ?)");
             stmt.setString(1, username);
             stmt.setBytes(2, password);
             stmt.setBytes(3, hash);
-            return stmt.execute();
+            int count = stmt.executeUpdate();
+            if (count > 1)
+                return 0;
         }
         catch (SQLException sqlExcept)
         {
             sqlExcept.printStackTrace();
         }
-        return false;
+        return -1;
     }
 
     private static void selectUsers()
@@ -95,20 +105,16 @@ public class MyDatabase {
 
     }
 
-    public static int loginUser(String username, String password) {
-        int count = 0;
+    public static boolean loginUser(String username, String password) {
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT PASSWORD, SALT FROM USERS_TABLE where username=?");
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
-            System.out.println(rs);
-            while (rs.next()){
-                count += 1;
-            }
+            rs.next();
+            return MyPasswords.isExpectedPassword(password.toCharArray(), rs.getBytes(2), rs.getBytes(1));
         } catch (SQLException sqlExcept) {
             sqlExcept.printStackTrace();
-            return -1;
+            return false;
         }
-        return count;
     }
 }
