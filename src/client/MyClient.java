@@ -1,42 +1,86 @@
 package client;
 
 import com.MyUtilities;
+import com.sun.net.httpserver.HttpsConfigurator;
+import com.sun.net.httpserver.HttpsParameters;
 import sun.misc.BASE64Encoder;
 
 import javax.json.*;
-import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyStore;
 import java.util.HashMap;
 
 public class MyClient {
+
 
     public static void main(String[] args) {
         HashMap<String, String> parametersMap = new HashMap<>();
         parametersMap.put("test", "name");
         parametersMap.put("another", "pass asda asd");
         System.out.println("Map size: " + parametersMap.size());
-        //String x = executeGet("http://localhost:8080/func1", parametersMap);
-        //System.out.println("GET SENT\nresponse: " + x);
-        String x = executePut("http://localhost:8080/func1", parametersMap);
-        //String x = executePost("http://localhost:8080/func1", parametersMap);
-        //System.out.println("POST SENT");
-        //System.out.println("reponse: " +  x);
+        SSLSocketFactory sslSocketFactory = makeSSLSocketFactory();
+        String x = executeGet("http://localhost:8080/func1", parametersMap,sslSocketFactory);
+        System.out.println("GET SENT\nresponse: " + x);
+//        String x = executePut("http://localhost:8080/func1", parametersMap, sslSocketFactory);
+//        String x = executePost("http://localhost:8080/func1", parametersMap, sslSocketFactory);
+//        System.out.println("POST SENT");
+//        System.out.println("reponse: " +  x);
 
 
     }
 
-    public static String executeGet(String targetURL, HashMap parameters) {
-        HttpURLConnection connection = null;
+    private static SSLSocketFactory makeSSLSocketFactory(){
 
         try {
-            //Create connection
+            SSLContext sslContext;
+            KeyStore keyStore = null;
+            KeyStore trustStore = null;
 
+            keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(new FileInputStream("keys/client/keystoreClient"),"sdisClient".toCharArray());
+
+            trustStore = KeyStore.getInstance("JKS");
+            trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+            keyManagerFactory.init(keyStore, "sdisClient".toCharArray());
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+            trustManagerFactory.init(trustStore);
+
+            //secure socket protocol implementation which acts as a factory for secure socket factories
+            sslContext = SSLContext.getInstance("TLSv1");
+            sslContext.init(keyManagerFactory.getKeyManagers(),trustManagerFactory.getTrustManagers(),null);
+
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            return sslSocketFactory;//send over this
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static String executeGet(String targetURL, HashMap parameters, SSLSocketFactory sslSocketFactory) {
+        HttpsURLConnection connection = null;
+        //Caused by: java.security.cert.CertificateException: No name matching localhost found
+//        HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);//Needed case server certifacte CN != hostname, in this case localhost
+        try {
+
+            //Create connection
+            //workaround for sun.net.www.protocol.http.HttpURLConnection cannot be cast to javax.net.ssl.HttpsURLConnection
             String urlParameters = MyUtilities.EncodeQuery(parameters);
-            URL url = new URL(targetURL + "?" + urlParameters);
-            connection = (HttpURLConnection) url.openConnection();
+            URL url = new URL(null, targetURL + "?" + urlParameters, new sun.net.www.protocol.https.Handler());
+//            URL url = new URL(targetURL);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
             connection.setRequestProperty("Accept-Charset", "UTF-8");
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
@@ -63,15 +107,22 @@ public class MyClient {
                 connection.disconnect();
             }
         }
+
+
     }
 
-    public static String executePost(String targetURL, HashMap parameters) {
-        HttpURLConnection connection = null;
-
+    public static String executePost(String targetURL, HashMap parameters, SSLSocketFactory sslSocketFactory) {
+        HttpsURLConnection connection = null;
+        //Caused by: java.security.cert.CertificateException: No name matching localhost found
+//        HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);//Needed case server certifacte CN != hostname, in this case localhost
         try {
+
             //Create connection
-            URL url = new URL(targetURL);
-            connection = (HttpURLConnection) url.openConnection();
+            //workaround for sun.net.www.protocol.http.HttpURLConnection cannot be cast to javax.net.ssl.HttpsURLConnection
+            URL url = new URL(null, targetURL, new sun.net.www.protocol.https.Handler());
+//            URL url = new URL(targetURL);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
                     "application/json");
@@ -118,13 +169,18 @@ public class MyClient {
         }
     }
 
-    public static String executePut(String targetURL, HashMap parameters) {
-        HttpURLConnection connection = null;
-
+    public static String executePut(String targetURL, HashMap parameters, SSLSocketFactory sslSocketFactory) {
+        HttpsURLConnection connection = null;
+        //Caused by: java.security.cert.CertificateException: No name matching localhost found
+//        HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);//Needed case server certifacte CN != hostname, in this case localhost
         try {
+
             //Create connection
-            URL url = new URL(targetURL);
-            connection = (HttpURLConnection) url.openConnection();
+            //workaround for sun.net.www.protocol.http.HttpURLConnection cannot be cast to javax.net.ssl.HttpsURLConnection
+            URL url = new URL(null, targetURL, new sun.net.www.protocol.https.Handler());
+//            URL url = new URL(targetURL);
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(sslSocketFactory);
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("Content-Type",
                     "application/json");

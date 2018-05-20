@@ -3,12 +3,20 @@ package server;
 import com.MyUtilities;
 import com.sun.net.httpserver.*;
 
+import javax.net.ssl.*;
+import javax.security.cert.X509Certificate;
+import java.awt.*;
 import java.io.*;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.util.*;
+import java.util.List;
 
 public class MyServer {
     private static final String HOSTNAME = "localhost";
@@ -33,11 +41,12 @@ public class MyServer {
     private static final String METHOD_OPTIONS = "OPTIONS";
     private static final String ALLOWED_METHODS = METHOD_GET + "," + METHOD_POST + "," + METHOD_OPTIONS;
 
-    private static HttpServer server = null;
+    private static HttpsServer server = null;
+    private static SSLContext sslContext = null;
 
     public MyServer(int port) throws IOException {
         this.port = port;
-        server = HttpServer.create(new InetSocketAddress(HOSTNAME, this.port), BACKLOG);
+        server = HttpsServer.create(new InetSocketAddress(HOSTNAME, this.port), BACKLOG);
 
         createContexts();
         basicAuthenticator = new BasicAuthenticator(METHOD_GET) {
@@ -47,16 +56,51 @@ public class MyServer {
             }
         };
 
+        try {
+            KeyStore keyStore = null;
+            KeyStore trustStore = null;
+
+            keyStore = KeyStore.getInstance("JKS");
+            keyStore.load(new FileInputStream("keys/server/keystoreServer"),"sdisServer".toCharArray());
+
+            trustStore = KeyStore.getInstance("JKS");
+            trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+            keyManagerFactory.init(keyStore, "sdisServer".toCharArray());
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+            trustManagerFactory.init(trustStore);
+
+            //secure socket protocol implementation which acts as a factory for secure socket factories
+            sslContext = SSLContext.getInstance("TLSv1");
+            sslContext.init(keyManagerFactory.getKeyManagers(),trustManagerFactory.getTrustManagers(),null);
+
+            server.setHttpsConfigurator (new HttpsConfigurator(sslContext) {
+                public void configure (HttpsParameters params) {
+                    SSLContext c = sslContext;
+                    // get the default parameters
+                    SSLParameters sslparams = c.getDefaultSSLParameters();
+                    params.setSSLParameters(sslparams);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void start() {
+
         server.setExecutor(null);
         server.start();
     }
 
     public void createContexts() {
         server.createContext("/", new RootHandler()).setAuthenticator(basicAuthenticator);
-        server.createContext("/func1", he -> {
+        server.createContext("/func1", hed -> {
+            HttpsExchange he = (HttpsExchange)hed;
             try {
                 final Headers headers = he.getResponseHeaders();
                 final String requestMethod = he.getRequestMethod().toUpperCase();
@@ -122,7 +166,8 @@ public class MyServer {
 
         @Override
 
-        public void handle(HttpExchange he) throws IOException {
+        public void handle(HttpExchange hed) throws IOException {
+            HttpsExchange he = (HttpsExchange)hed;
             String response = "<h1>Server start success if you see this message</h1>" + "<h1>Port: " + port + "</h1>";
             he.sendResponseHeaders(200, response.length());
             OutputStream os = he.getResponseBody();
