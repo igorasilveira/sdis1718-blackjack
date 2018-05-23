@@ -6,7 +6,6 @@ public class MyCard  {
             CLUBS, DIAMONDS, HEARTS, SPADES
     }
 
-
     private String value;   // 1,2,3,4..., J,Q,K,A
     private Suit suit;    // naipe
     private int cost;
