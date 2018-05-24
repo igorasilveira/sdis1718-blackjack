@@ -3,8 +3,8 @@ package server;
 import java.sql.*;
 
 public class MyDatabase {
-//    private static String dbURL = "jdbc:derby:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db";
-    private static String dbURL = "jdbc:derby:D:/Data/GitHub/sdis1718-blackjack/db";
+    private static String dbURL = "jdbc:derby:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db";
+    //private static String dbURL = "jdbc:derby:D:/Data/GitHub/sdis1718-blackjack/db";
     // jdbc Connection
     private static Connection conn = null;
     private static Statement stmt = null;
