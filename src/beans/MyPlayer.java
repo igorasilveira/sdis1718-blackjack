@@ -39,5 +39,4 @@ public class MyPlayer {
 	public List<MyCard> getCards(){
 		return cards;
 	}
-	
 }
