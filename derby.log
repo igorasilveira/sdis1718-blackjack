@@ -1,0 +1,18 @@
+----------------------------------------------------------------
+Fri May 18 16:37:37 WEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-73e6-36b2-000006bba868 
+on database directory /Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_171-b11
+user.dir=/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.13.4
+derby.system.home=null
+------------  Begin Error Message -------------
+
+System may be in a inconsistent state, missing file /Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db/log/log4.dat
+------------  End Error Message -------------
+
+Database Class Loader started - derby.database.classpath=''
