@@ -1,31 +1,42 @@
 package beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyPlayer {
-
-    String username;
-    String password;
-
-    public MyPlayer() {
-    }
-
-    public MyPlayer(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	
+	private int id;
+	private String username;
+	private List<MyCard> cards = new ArrayList<MyCard>();
+	private int points;
+	
+	public MyPlayer(int id, String username){
+		this.id = id;
+		this.username = username;
+	}
+	
+	public void giveCard(MyCard card){
+		cards.add(card);
+		points += card.getCost();	
+	}
+	
+	public int getID(){
+		return id;
+	}
+	
+	public int getPoints(){
+		return points;
+	}
+	
+	public String getUsername(){
+		return username;
+	}
+	
+	public void clearHand(){
+		cards.clear();
+		points = 0;
+	}
+	public List<MyCard> getCards(){
+		return cards;
+	}
 }
