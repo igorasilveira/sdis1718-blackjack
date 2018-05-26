@@ -11,6 +11,7 @@ import javax.net.ssl.SSLParameters;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
 import java.net.InetSocketAddress;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -61,7 +62,13 @@ public class MyServer {
         DATABASE = new MyDatabase();
         DATABASE.createConnection();
 
-        sslConnection = new MySSLConnectionFactory(HOSTNAME);
+        URL whatismyip = new URL("http://checkip.amazonaws.com");
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                whatismyip.openStream()));
+
+        String outIP = in.readLine(); //you get the IP as a String
+
+        sslConnection = new MySSLConnectionFactory(HOSTNAME, outIP);
 
         createContexts();
     }

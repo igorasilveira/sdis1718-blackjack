@@ -34,7 +34,7 @@ public class MyClient {
         hostIP = hIP;
         hostPort = port;
 
-        sslConnection = new MySSLConnectionFactory(hostname);
+        sslConnection = new MySSLConnectionFactory(hostname, outIP);
 
         try {
             sslSocketFactory = sslSocketFactory();

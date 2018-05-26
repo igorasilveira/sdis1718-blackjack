@@ -9,9 +9,10 @@ import java.security.cert.CertificateException;
 public class MySSLConnectionFactory {
 
     private String HOSTNAME = "";
+    private String outIP = "";
 
-    public MySSLConnectionFactory(String hostname) {
-        HOSTNAME = hostname;
+    public MySSLConnectionFactory(String hostname, String outIP) {
+        HOSTNAME = hostname; this.outIP = outIP;
     }
 
     public boolean createKeyStore(String aliasKeystore, String passwordKeystore, String keystoreFilename) throws IOException, InterruptedException {
@@ -20,7 +21,7 @@ public class MySSLConnectionFactory {
         //Create a new keystore and self-signed certificate with corresponding public and private keys
         String[] commandKeystoreClient = {"keytool", "-genkeypair", "-alias", aliasKeystore , "-keyalg", "RSA", "-validity", "7", "-keystore", keystoreFilename};
 
-        String[] commandKeystoreServer = {"keytool", "-genkeypair", "-alias", aliasKeystore , "-keyalg", "RSA", "-validity", "7", "-keystore", keystoreFilename,"-ext","san=ip:127.0.0.1"};
+        String[] commandKeystoreServer = {"keytool", "-genkeypair", "-alias", aliasKeystore , "-keyalg", "RSA", "-validity", "7", "-keystore", keystoreFilename,"-ext","san=ip:" +  outIP};
 
         ProcessBuilder pb;
         if (aliasKeystore == "client")

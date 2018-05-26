@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class MyServerApp {
 
-    public static void main(final String... args) {
+    public static void main(final String... args) throws IOException {
         MyServer server = null;
         try {
             server = new MyServer(Integer.parseInt(args[0]));
