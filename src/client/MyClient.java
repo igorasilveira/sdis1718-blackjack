@@ -177,7 +177,6 @@ public class MyClient {
     public static int createUser(String username, String password) {
 
         HttpsURLConnection connection = null;
-
         try {
             //Create connection
             URL url = new URL(null, "http://" + hostIP + ":" + hostPort + "/users/register", new sun.net.www.protocol.https.Handler());
