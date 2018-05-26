@@ -32,6 +32,14 @@ public class MyPlayer {
 		return password;
 	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void clearHand(){
 		cards.clear();
 		points = 0;
