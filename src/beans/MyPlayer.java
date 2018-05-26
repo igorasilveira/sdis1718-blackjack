@@ -5,23 +5,19 @@ import java.util.List;
 
 public class MyPlayer {
 	
-	private int id;
 	private String username;
+	private String password;
 	private List<MyCard> cards = new ArrayList<MyCard>();
 	private int points;
 	
-	public MyPlayer(int id, String username){
-		this.id = id;
+	public MyPlayer(String username, String password){
 		this.username = username;
+		this.password = password;
 	}
 	
 	public void giveCard(MyCard card){
 		cards.add(card);
 		points += card.getCost();	
-	}
-	
-	public int getID(){
-		return id;
 	}
 	
 	public int getPoints(){
@@ -31,7 +27,11 @@ public class MyPlayer {
 	public String getUsername(){
 		return username;
 	}
-	
+
+	public String getPassword() {
+		return password;
+	}
+
 	public void clearHand(){
 		cards.clear();
 		points = 0;
