@@ -18,9 +18,14 @@ public class MySSLConnectionFactory {
         System.out.println("Keystore missing. Creating...");
 
         //Create a new keystore and self-signed certificate with corresponding public and private keys
-        String[] commandKeystore = {"keytool", "-genkeypair", "-alias", aliasKeystore , "-keyalg", "RSA", "-validity", "7", "-keystore", keystoreFilename};
+        String[] commandKeystoreClient = {"keytool", "-genkeypair", "-alias", aliasKeystore , "-keyalg", "RSA", "-validity", "7", "-keystore", keystoreFilename};
 
-        ProcessBuilder pb = new ProcessBuilder(commandKeystore);
+        String[] commandKeystoreServer = {"keytool", "-genkeypair", "-alias", aliasKeystore , "-keyalg", "RSA", "-validity", "7", "-keystore", keystoreFilename,"-ext","san=ip:127.0.0.1"};
+
+        ProcessBuilder pb;
+        if (aliasKeystore == "client")
+             pb = new ProcessBuilder(commandKeystoreClient);
+        else pb = new ProcessBuilder(commandKeystoreServer);
 
         File serverDirectory = new File("keys/"+ aliasKeystore);
 
