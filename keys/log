@@ -1,0 +1,70 @@
+Enter keystore password:  Re-enter new password: What is your first and last name?
+  [Unknown]:  What is the name of your organizational unit?
+  [Unknown]:  What is the name of your organization?
+  [Unknown]:  What is the name of your City or Locality?
+  [Unknown]:  What is the name of your State or Province?
+  [Unknown]:  What is the two-letter country code for this unit?
+  [Unknown]:  Is CN=localhost, OU=sdis1718-blackjack, O=FEUP, L=Porto, ST=Porto, C=PT correct?
+  [no]:  
+Enter key password for <server>
+	(RETURN if same as keystore password):  
+Warning:
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore keystoreServer -destkeystore keystoreServer -deststoretype pkcs12".
+Enter keystore password:  Re-enter new password: Owner: CN=localhost, OU=sdis1718-blackjack, O=FEUP, L=Porto, ST=Porto, C=PT
+Issuer: CN=localhost, OU=sdis1718-blackjack, O=FEUP, L=Porto, ST=Porto, C=PT
+Serial number: 631548f4
+Valid from: Sat May 26 16:51:06 WEST 2018 until: Sat Jun 02 16:51:06 WEST 2018
+Certificate fingerprints:
+	 MD5:  D9:A4:06:62:F7:00:7D:08:A8:42:2E:E8:AE:0B:30:77
+	 SHA1: 4E:E8:9F:0D:FF:1F:0B:1E:7A:41:E6:54:60:3A:A6:CC:4B:A0:30:76
+	 SHA256: 8F:19:F4:D2:CD:10:2E:09:E9:32:46:C2:32:A7:F9:86:C9:23:DA:78:29:B9:8E:2A:23:61:88:F1:32:C9:5B:D5
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+Extensions: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: F3 29 86 E6 9A 63 E8 59   CC 85 35 71 B0 2D EC 7B  .)...c.Y..5q.-..
+0010: 97 D2 63 3B                                        ..c;
+]
+]
+
+Trust this certificate? [no]:  Certificate was added to keystore
+Enter keystore password:  Re-enter new password: What is your first and last name?
+  [Unknown]:  What is the name of your organizational unit?
+  [Unknown]:  What is the name of your organization?
+  [Unknown]:  What is the name of your City or Locality?
+  [Unknown]:  What is the name of your State or Province?
+  [Unknown]:  What is the two-letter country code for this unit?
+  [Unknown]:  Is CN=localhost, OU=sdis1718-blackjack, O=FEUP, L=Porto, ST=Porto, C=PT correct?
+  [no]:  
+Enter key password for <client>
+	(RETURN if same as keystore password):  
+Warning:
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore keystoreClient -destkeystore keystoreClient -deststoretype pkcs12".
+Enter keystore password:  Owner: CN=localhost, OU=sdis1718-blackjack, O=FEUP, L=Porto, ST=Porto, C=PT
+Issuer: CN=localhost, OU=sdis1718-blackjack, O=FEUP, L=Porto, ST=Porto, C=PT
+Serial number: 2e2416cb
+Valid from: Sat May 26 16:51:12 WEST 2018 until: Sat Jun 02 16:51:12 WEST 2018
+Certificate fingerprints:
+	 MD5:  B5:E0:9B:9E:A5:EA:FC:F0:D7:00:F1:68:09:0F:01:CD
+	 SHA1: D8:E3:38:10:21:9C:64:4B:79:77:39:C3:98:A2:5C:E5:8E:1E:4A:A8
+	 SHA256: 2D:35:8B:97:64:EB:8A:07:F9:BC:A2:1E:CA:8C:11:C8:AC:27:4E:4D:DD:11:08:ED:7B:49:85:96:C4:D3:31:76
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+Extensions: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: AB C2 95 F3 AE BD 3F 7F   DD 21 E5 E2 5B 03 7F 2D  ......?..!..[..-
+0010: 73 C5 92 EC                                        s...
+]
+]
+
+Trust this certificate? [no]:  Certificate was added to keystore
