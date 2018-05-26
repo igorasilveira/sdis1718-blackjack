@@ -125,14 +125,14 @@ public class MyMenus {
 
                         while (tries < MAX_TRIES && !success) {
                             System.out.println("Sending request");
-                            registered = MyClient.createUser(username, password);
-                            if (registered == 0) {
-                                MyClient.user.setUsername(username);
-                                MyClient.user.setPassword(password);
+                            try {
+                                registered = MyClient.createUser(username, password);
                                 success = true;
                                 isValid = true;
+                            } catch (Exception e) {
+                                System.out.println("An error occurred trying to connect.");
+                                tries++;
                             }
-                            tries++;
                         }
 
                         if (tries == MAX_TRIES) {
@@ -145,18 +145,20 @@ public class MyMenus {
 
                 } else
                     System.out.println("Passwords do not match");
-            }
 
-            if (registered == 0) {
-                System.out.println("Registered Successfully!");
-                tableMenu();
-            }
-            else if (registered == 1){
-                System.out.println("That username is taken.");
-                register();
-            } else {
-                System.out.println("An error as occured");
-                register();
+                if (registered == 0) {
+                    MyClient.user.setUsername(username);
+                    MyClient.user.setPassword(password);
+                    System.out.println("Registered Successfully!");
+                    tableMenu();
+                }
+                else if (registered == 1){
+                    System.out.println("That username is taken.");
+                    register();
+                } else {
+                    System.out.println("An error as occured");
+                    register();
+                }
             }
         }
     }

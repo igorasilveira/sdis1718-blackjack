@@ -11,6 +11,13 @@ public class MyServerApp {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            server.startSSLContext();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("[ERROR] Could not configure SSL context");
+            System.exit(1);
+        }
         server.start();
     }
 }
