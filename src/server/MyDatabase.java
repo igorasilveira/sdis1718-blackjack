@@ -42,7 +42,7 @@ public class MyDatabase {
             stmt.setBytes(2, password);
             stmt.setBytes(3, hash);
             int count = stmt.executeUpdate();
-            if (count > 1)
+            if (count > 0)
                 return 0;
         }
         catch (SQLException sqlExcept)

@@ -1,14 +1,20 @@
 package server;
 
+import com.MySSLConnectionFactory;
 import com.MyUtilities;
 import com.sun.net.httpserver.*;
 
 import javax.json.*;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
-import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.*;
 
 public class MyServer {
@@ -44,14 +50,18 @@ public class MyServer {
     private static final String METHOD_OPTIONS = "OPTIONS";
     private static final String ALLOWED_METHODS = METHOD_GET + "," + METHOD_POST + "," + METHOD_OPTIONS;
 
-    private static HttpServer server = null;
+    private static HttpsServer server = null;
+    private static SSLContext sslContext = null;
+    private static MySSLConnectionFactory sslConnection = null;
 
     public MyServer(int port) throws IOException {
         this.port = port;
-        server = HttpServer.create(new InetSocketAddress(HOSTNAME, this.port), BACKLOG);
+        server = HttpsServer.create(new InetSocketAddress(HOSTNAME, this.port), BACKLOG);
 
         DATABASE = new MyDatabase();
         DATABASE.createConnection();
+
+        sslConnection = new MySSLConnectionFactory(HOSTNAME);
 
         createContexts();
     }
@@ -60,6 +70,57 @@ public class MyServer {
         server.setExecutor(null);
         server.start();
         System.out.println("Server running...");
+    }
+
+    public void startSSLContext() throws IOException, InterruptedException, KeyStoreException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException, KeyManagementException {
+        KeyStore keyStore = null;
+        KeyStore trustStore = null;
+        boolean keyStoreCreated = false;
+        boolean trustStoreCreated = false;
+        String aliasKeystore = "server";
+        String passwordKeystore = "sdisServer";
+        String keyStorePath = "keys/server/keystoreServer";
+        String keystoreFilename = "keystoreServer";
+
+        String passwordTruststore = "truststore";
+        String trustStorePath = "keys/truststore";
+
+        File keystoreFile = new File(keyStorePath);
+        File truststoreFile = new File(trustStorePath);
+
+        if(!keystoreFile.exists()) {
+            keyStoreCreated = sslConnection.createKeyStore(aliasKeystore, passwordKeystore, keystoreFilename);
+        }
+
+        keyStore = KeyStore.getInstance("JKS");
+        keyStore.load(new FileInputStream(keyStorePath), passwordKeystore.toCharArray());
+
+        if(keyStoreCreated == true/*!truststoreFile.exists()*/) {
+            trustStoreCreated = sslConnection.createTrustStore(truststoreFile, keystoreFilename, aliasKeystore, passwordTruststore);
+        }
+
+        trustStore = KeyStore.getInstance("JKS");
+        trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+        keyManagerFactory.init(keyStore, passwordKeystore.toCharArray());
+
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+        trustManagerFactory.init(trustStore);
+
+        //secure socket protocol implementation which acts as a factory for secure socket factories
+        sslContext = SSLContext.getInstance("TLSv1");
+        sslContext.init(keyManagerFactory.getKeyManagers(),trustManagerFactory.getTrustManagers(),null);
+
+        //https://docs.oracle.com/javase/7/docs/jre/api/net/httpserver/spec/com/sun/net/httpserver/HttpsConfigurator.html
+        server.setHttpsConfigurator (new HttpsConfigurator(sslContext) {
+            public void configure (HttpsParameters params) {
+                SSLContext c = sslContext;
+                // get the default parameters
+                SSLParameters sslparams = c.getDefaultSSLParameters();
+                params.setSSLParameters(sslparams);
+            }
+        });
     }
 
     public void createContexts() {
@@ -86,7 +147,8 @@ public class MyServer {
 
     public class RegisterHandler implements HttpHandler {
         @Override
-        public void handle(HttpExchange he) throws IOException {
+        public void handle(HttpExchange exchange) throws IOException {
+            HttpsExchange he = (HttpsExchange) exchange;
             try {
                 JsonObject jsonObject = null;
                 final Headers headers = he.getResponseHeaders();
@@ -136,12 +198,15 @@ public class MyServer {
 
                         switch (result) {
                             case 0:
+                                // registered successfully
                                 he.sendResponseHeaders(STATUS_CREATED, 0);
                                 break;
                             case 1:
+                                // username exists
                                 he.sendResponseHeaders(STATUS_CONFLICT, 0);
                                 break;
                             default:
+                                // database error
                                 he.sendResponseHeaders(STATUS_INTERNAL_ERROR, 0);
                         }
                         break;
@@ -162,7 +227,8 @@ public class MyServer {
 
     private class LoginHandler implements HttpHandler {
         @Override
-        public void handle(HttpExchange he) throws IOException {
+        public void handle(HttpExchange exchange) throws IOException {
+            HttpsExchange he = (HttpsExchange) exchange;
             try {
                 JsonObject jsonObject = null;
                 final Headers headers = he.getResponseHeaders();

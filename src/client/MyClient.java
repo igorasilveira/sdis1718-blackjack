@@ -1,23 +1,32 @@
 package client;
 
 import beans.MyPlayer;
+import com.MySSLConnectionFactory;
 import com.MyUtilities;
 import sun.misc.BASE64Encoder;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class MyClient {
+
+    private final String hostname = "localhost";
     private static String hostIP;
     private static int hostPort = 8080;
 
+    private static SSLSocketFactory sslSocketFactory = null;
+
     private static MyMenus menus = null;
+
+    private static MySSLConnectionFactory sslConnection = null;
 
     static MyPlayer user = new MyPlayer("guest", "guest");
 
@@ -25,7 +34,76 @@ public class MyClient {
         hostIP = hIP;
         hostPort = port;
 
+        sslConnection = new MySSLConnectionFactory(hostname);
+
+        try {
+            sslSocketFactory = sslSocketFactory();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
         menus = new MyMenus();
+    }
+
+    private static SSLSocketFactory sslSocketFactory() throws IOException, InterruptedException, KeyStoreException, CertificateException, NoSuchAlgorithmException, UnrecoverableKeyException, KeyManagementException {
+        SSLContext sslContext;
+
+        KeyStore keyStore = null;
+        KeyStore trustStore = null;
+        boolean keyStoreCreated = false;
+        boolean trustStoreCreated = false;
+        String aliasKeystore = "client";
+        String passwordKeystore = "sdisClient";
+        String keyStorePath = "keys/client/keystoreClient";
+        String keystoreFilename = "keystoreClient";
+
+        String passwordTruststore = "truststore";
+        String trustStorePath = "keys/truststore";
+
+        File keystoreFile = new File(keyStorePath);
+        File truststoreFile = new File(trustStorePath);
+
+        if(!keystoreFile.exists()) {
+
+            keyStoreCreated = sslConnection.createKeyStore(aliasKeystore, passwordKeystore, keystoreFilename);
+        }
+
+        keyStore = KeyStore.getInstance("JKS");
+        keyStore.load(new FileInputStream(keyStorePath), passwordKeystore.toCharArray());
+
+        if(keyStoreCreated == true/*!truststoreFile.exists()*/) {
+
+            trustStoreCreated = sslConnection.createTrustStore(truststoreFile, keystoreFilename, aliasKeystore, passwordTruststore);
+        }
+
+        trustStore = KeyStore.getInstance("JKS");
+        trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+        keyManagerFactory.init(keyStore, passwordKeystore.toCharArray());
+
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+        trustManagerFactory.init(trustStore);
+
+        //secure socket protocol implementation which acts as a factory for secure socket factories
+        sslContext = SSLContext.getInstance("TLSv1");
+        sslContext.init(keyManagerFactory.getKeyManagers(),trustManagerFactory.getTrustManagers(),null);
+
+        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+        return sslSocketFactory;//send over this
     }
 
 //    public void run() throws UnsupportedEncodingException {
@@ -46,12 +124,12 @@ public class MyClient {
     }
 
     public static boolean loginUser(MyPlayer myUser) {
-        HttpURLConnection connection = null;
+        HttpsURLConnection connection = null;
 
         try {
             //Create connection
-            URL url = new URL("http://" + hostIP + ":" + hostPort + "/users/login");
-            connection = (HttpURLConnection) url.openConnection();
+            URL url = new URL(null, "http://" + hostIP + ":" + hostPort + "/users/login", new sun.net.www.protocol.https.Handler());
+            connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
                     "application/json");
@@ -98,13 +176,14 @@ public class MyClient {
 
     public static int createUser(String username, String password) {
 
-        HttpURLConnection connection = null;
+        HttpsURLConnection connection = null;
 
         try {
             //Create connection
-            URL url = new URL("http://" + hostIP + ":" + hostPort + "/users/register");
-            connection = (HttpURLConnection) url.openConnection();
+            URL url = new URL(null, "http://" + hostIP + ":" + hostPort + "/users/register", new sun.net.www.protocol.https.Handler());
+            connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setSSLSocketFactory(sslSocketFactory);
             connection.setRequestProperty("Content-Type",
                     "application/json");
 
@@ -140,7 +219,7 @@ public class MyClient {
                 return 1;
             }
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             return -1;
         } finally {
             if (connection != null) {
