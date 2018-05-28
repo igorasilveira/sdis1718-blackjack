@@ -9,9 +9,12 @@ public class MyCard  {
     private String value;   // 1,2,3,4..., J,Q,K,A
     private Suit suit;    // naipe
     private int cost;
+    private boolean isAce = false;
 
     public MyCard(int value, Suit suit){
         parseValue(value);
+        if (value == 1)
+            isAce = true;
         this.suit = suit;
         setCost();
     }
@@ -68,5 +71,9 @@ public class MyCard  {
 
     public int getCost(){
         return cost;
+    }
+
+    public boolean isAce() {
+        return isAce;
     }
 }

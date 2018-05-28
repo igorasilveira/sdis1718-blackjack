@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sat May 26 18:49:40 WEST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-9d91-fdd5-000006bea1e0 
+Mon May 28 06:47:01 WEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-a549-19bd-000006c525f8 
 on database directory /Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/lib/derby.jar
 java.vendor=Oracle Corporation

@@ -105,16 +105,76 @@ public class MyDatabase {
 
     }
 
-    public static boolean loginUser(String username, String password) {
+    public static boolean checkCredits(String username, int credits) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT PASSWORD, SALT FROM USERS_TABLE where username=?");
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return MyPasswords.isExpectedPassword(password.toCharArray(), rs.getBytes(2), rs.getBytes(1));
-        } catch (SQLException sqlExcept) {
-            sqlExcept.printStackTrace();
+            PreparedStatement statement = conn.prepareStatement("SELECT CREDITS FROM USERS_TABLE WHERE USERNAME = ?");
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                // remove them
+                int amount = rs.getInt(1);
+                if (amount - credits < 0)
+                    return false;
+                else {
+                    String newAmount = String.valueOf(amount - credits);
+                    statement = conn.prepareStatement("UPDATE USERS_TABLE SET CREDITS = ? WHERE USERNAME = ?");
+                    statement.setString(1, newAmount);
+                    statement.setString(2, username);
+                    int count = statement.executeUpdate();
+
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
+
+        return false;
+    }
+
+    public static boolean addCredits(String username, int credits) {
+
+        try {
+            PreparedStatement statement = conn.prepareStatement("SELECT CREDITS FROM USERS_TABLE WHERE USERNAME = ?");
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                // remove them
+                int amount = rs.getInt(1);
+                int newAmount = amount + credits;
+                String toUpdate = String.valueOf(newAmount);
+                statement = conn.prepareStatement("UPDATE USERS_TABLE SET CREDITS = ? WHERE USERNAME = ?");
+                statement.setString(1, toUpdate);
+                statement.setString(2, username);
+                int count = statement.executeUpdate();
+
+                return count > 0;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return false;
+    }
+
+    public static int loginUser(String username, String password) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT PASSWORD, SALT, CREDITS FROM USERS_TABLE where username=?");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next())
+                if (MyPasswords.isExpectedPassword(password.toCharArray(), rs.getBytes(2), rs.getBytes(1)))
+                    return rs.getInt(3);
+        } catch (SQLException sqlExcept) {
+            sqlExcept.printStackTrace();
+            return -1;
+        }
+        return -1;
     }
 }

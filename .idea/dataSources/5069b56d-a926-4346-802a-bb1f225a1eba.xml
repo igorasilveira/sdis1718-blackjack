@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="db">
-  <database-model serializer="dbm" rdbms="DERBY" format-version="4.8">
+  <database-model serializer="dbm" rdbms="DERBY" format-version="4.9">
     <root id="1">
       <ServerVersion>10.14</ServerVersion>
     </root>
@@ -26,27 +26,30 @@
       <SequenceIdentity>1</SequenceIdentity>
       <DefaultExpression>AUTOINCREMENT: start 1 increment 1</DefaultExpression>
     </column>
-    <column id="15" parent="13" name="CREDITS">
+    <column id="15" parent="13" name="USERNAME">
       <Position>2</Position>
-      <DataType>INTEGER|4s</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>0</DefaultExpression>
-    </column>
-    <column id="16" parent="13" name="USERNAME">
-      <Position>3</Position>
       <DataType>VARCHAR(15)|12s</DataType>
     </column>
-    <column id="17" parent="13" name="PASSWORD">
+    <column id="16" parent="13" name="PASSWORD">
+      <Position>3</Position>
+      <DataType>BLOB|2004s</DataType>
+    </column>
+    <column id="17" parent="13" name="SALT">
       <Position>4</Position>
       <DataType>BLOB|2004s</DataType>
     </column>
-    <column id="18" parent="13" name="SALT">
+    <column id="18" parent="13" name="CREDITS">
       <Position>5</Position>
-      <DataType>BLOB|2004s</DataType>
+      <DataType>INTEGER|4s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>100</DefaultExpression>
     </column>
     <index id="19" parent="13" name="USERS_TABLE_USERNAME_UINDEX">
       <ColNames>USERNAME</ColNames>
       <Unique>1</Unique>
     </index>
+    <key id="20" parent="13" name="USERS_TABLE_USERNAME_UINDEX">
+      <ColNames>USERNAME</ColNames>
+    </key>
   </database-model>
 </dataSource>

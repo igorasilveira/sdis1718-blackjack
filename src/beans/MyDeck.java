@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import beans.MyCard.Suit;
 import java.util.Collections;
@@ -10,7 +11,7 @@ public class MyDeck {
     private final static int NO_SUITS = 4;
     private final static int NO_CARDS_PER_SUIT = 13;
 
-	private List<MyCard> deck = new ArrayList<MyCard>();
+	private LinkedList<MyCard> deck = new LinkedList<>();
 
 	public MyDeck() {
         Suit suit;
@@ -32,7 +33,7 @@ public class MyDeck {
 		return deck;
 	}
 
-	public void setDeck(List<MyCard> deck) {
+	public void setDeck(LinkedList<MyCard> deck) {
 		this.deck = deck;
 	}
 
@@ -42,5 +43,9 @@ public class MyDeck {
 
     public void shuffle(){
         Collections.shuffle(deck);
+    }
+
+    public MyCard giveCard() {
+	    return deck.removeFirst();
     }
 }

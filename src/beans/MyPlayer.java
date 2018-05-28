@@ -7,14 +7,16 @@ public class MyPlayer {
 	
 	private String username;
 	private String password;
+	private String token;
 	private List<MyCard> cards = new ArrayList<MyCard>();
+	private int bet;
 	private int points;
-	
-	public MyPlayer(String username, String password){
-		this.username = username;
-		this.password = password;
+	private int credits;
+
+	public MyPlayer(){
 	}
-	
+
+
 	public void giveCard(MyCard card){
 		cards.add(card);
 		points += card.getCost();	
@@ -40,11 +42,51 @@ public class MyPlayer {
 		this.password = password;
 	}
 
+	public int getCredits() {
+		return credits;
+	}
+
+	public void setCredits(int credits) {
+		this.credits = credits;
+	}
+
 	public void clearHand(){
 		cards.clear();
 		points = 0;
 	}
 	public List<MyCard> getCards(){
 		return cards;
+	}
+
+	public int getTotal() {
+		int total = 0;
+		for (MyCard card:
+			 cards) {
+			if (card.isAce()) {
+				if ((total + 10) < 21)
+					total = total + 10;
+				else
+					total = total + 1;
+			} else
+				total = total + card.getCost();
+		}
+
+		return total;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public int getBet() {
+		return bet;
+	}
+
+	public void setBet(int bet) {
+		this.bet = bet;
 	}
 }

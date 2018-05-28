@@ -10,7 +10,7 @@ public class MyClientApp {
     protected static String hostIP;
     protected static int hostPort = 8080;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         if (args.length != 2) {
             System.out.println("Usage: " +
@@ -28,18 +28,10 @@ public class MyClientApp {
             System.exit(1);
         }
 
-        try {
-            System.out.println("Connecting to server on " + hostAddress.toString());
-            if (!hostAddress.isReachable(10000)) {
-                System.out.println("Connection time out");
-                System.exit(1);
-            }
+
 
             MyClient client = new MyClient(hostIP, hostPort);
             client.run();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
