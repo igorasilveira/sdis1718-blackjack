@@ -1,0 +1,569 @@
+diff --git a/db/README_DO_NOT_TOUCH_FILES.txt b/db/README_DO_NOT_TOUCH_FILES.txt
+deleted file mode 100644
+index a4bc145..0000000
+--- a/db/README_DO_NOT_TOUCH_FILES.txt
++++ /dev/null
+@@ -1,9 +0,0 @@
+-
+-# *************************************************************************
+-# ***              DO NOT TOUCH FILES IN THIS DIRECTORY!                ***
+-# *** FILES IN THIS DIRECTORY AND SUBDIRECTORIES CONSTITUTE A DERBY     ***
+-# *** DATABASE, WHICH INCLUDES THE DATA (USER AND SYSTEM) AND THE       ***
+-# *** FILES NECESSARY FOR DATABASE RECOVERY.                            ***
+-# *** EDITING, ADDING, OR DELETING ANY OF THESE FILES MAY CAUSE DATA    ***
+-# *** CORRUPTION AND LEAVE THE DATABASE IN A NON-RECOVERABLE STATE.     ***
+-# *************************************************************************
+\ No newline at end of file
+diff --git a/db/db.lck b/db/db.lck
+deleted file mode 100644
+index 2e1111f..0000000
+Binary files a/db/db.lck and /dev/null differ
+diff --git a/db/dbex.lck b/db/dbex.lck
+deleted file mode 100644
+index 720d64f..0000000
+Binary files a/db/dbex.lck and /dev/null differ
+diff --git a/db/log/README_DO_NOT_TOUCH_FILES.txt b/db/log/README_DO_NOT_TOUCH_FILES.txt
+deleted file mode 100644
+index 56df292..0000000
+--- a/db/log/README_DO_NOT_TOUCH_FILES.txt
++++ /dev/null
+@@ -1,8 +0,0 @@
+-
+-# *************************************************************************
+-# ***              DO NOT TOUCH FILES IN THIS DIRECTORY!                ***
+-# *** FILES IN THIS DIRECTORY ARE USED BY THE DERBY DATABASE RECOVERY   ***
+-# *** SYSTEM. EDITING, ADDING, OR DELETING FILES IN THIS DIRECTORY      ***
+-# *** WILL CAUSE THE DERBY RECOVERY SYSTEM TO FAIL, LEADING TO          ***
+-# *** NON-RECOVERABLE CORRUPT DATABASES.                                ***
+-# *************************************************************************
+\ No newline at end of file
+diff --git a/db/log/log.ctrl b/db/log/log.ctrl
+deleted file mode 100644
+index 8946417..0000000
+Binary files a/db/log/log.ctrl and /dev/null differ
+diff --git a/db/log/logmirror.ctrl b/db/log/logmirror.ctrl
+deleted file mode 100644
+index 8946417..0000000
+Binary files a/db/log/logmirror.ctrl and /dev/null differ
+diff --git a/db/seg0/README_DO_NOT_TOUCH_FILES.txt b/db/seg0/README_DO_NOT_TOUCH_FILES.txt
+deleted file mode 100644
+index 2bdad06..0000000
+--- a/db/seg0/README_DO_NOT_TOUCH_FILES.txt
++++ /dev/null
+@@ -1,8 +0,0 @@
+-
+-# *************************************************************************
+-# ***              DO NOT TOUCH FILES IN THIS DIRECTORY!                ***
+-# *** FILES IN THIS DIRECTORY ARE USED BY THE DERBY DATABASE TO STORE   *** 
+-# *** USER AND SYSTEM DATA. EDITING, ADDING, OR DELETING FILES IN THIS  ***
+-# *** DIRECTORY WILL CORRUPT THE ASSOCIATED DERBY DATABASE AND MAKE     ***
+-# *** IT NON-RECOVERABLE.                                               ***
+-# *************************************************************************
+\ No newline at end of file
+diff --git a/db/seg0/c10.dat b/db/seg0/c10.dat
+deleted file mode 100644
+index 1775c67..0000000
+Binary files a/db/seg0/c10.dat and /dev/null differ
+diff --git a/db/seg0/c101.dat b/db/seg0/c101.dat
+deleted file mode 100644
+index 1118178..0000000
+Binary files a/db/seg0/c101.dat and /dev/null differ
+diff --git a/db/seg0/c111.dat b/db/seg0/c111.dat
+deleted file mode 100644
+index 71b1f8d..0000000
+Binary files a/db/seg0/c111.dat and /dev/null differ
+diff --git a/db/seg0/c121.dat b/db/seg0/c121.dat
+deleted file mode 100644
+index fbf18b9..0000000
+Binary files a/db/seg0/c121.dat and /dev/null differ
+diff --git a/db/seg0/c130.dat b/db/seg0/c130.dat
+deleted file mode 100644
+index 7b2a654..0000000
+Binary files a/db/seg0/c130.dat and /dev/null differ
+diff --git a/db/seg0/c141.dat b/db/seg0/c141.dat
+deleted file mode 100644
+index 3d983c2..0000000
+Binary files a/db/seg0/c141.dat and /dev/null differ
+diff --git a/db/seg0/c150.dat b/db/seg0/c150.dat
+deleted file mode 100644
+index e2ea576..0000000
+Binary files a/db/seg0/c150.dat and /dev/null differ
+diff --git a/db/seg0/c161.dat b/db/seg0/c161.dat
+deleted file mode 100644
+index 90960e6..0000000
+Binary files a/db/seg0/c161.dat and /dev/null differ
+diff --git a/db/seg0/c171.dat b/db/seg0/c171.dat
+deleted file mode 100644
+index 55d4095..0000000
+Binary files a/db/seg0/c171.dat and /dev/null differ
+diff --git a/db/seg0/c180.dat b/db/seg0/c180.dat
+deleted file mode 100644
+index fe2814a..0000000
+Binary files a/db/seg0/c180.dat and /dev/null differ
+diff --git a/db/seg0/c191.dat b/db/seg0/c191.dat
+deleted file mode 100644
+index 2676a9a..0000000
+Binary files a/db/seg0/c191.dat and /dev/null differ
+diff --git a/db/seg0/c1a1.dat b/db/seg0/c1a1.dat
+deleted file mode 100644
+index 4e23196..0000000
+Binary files a/db/seg0/c1a1.dat and /dev/null differ
+diff --git a/db/seg0/c1b1.dat b/db/seg0/c1b1.dat
+deleted file mode 100644
+index 2a87fa3..0000000
+Binary files a/db/seg0/c1b1.dat and /dev/null differ
+diff --git a/db/seg0/c1c0.dat b/db/seg0/c1c0.dat
+deleted file mode 100644
+index c5b91e2..0000000
+Binary files a/db/seg0/c1c0.dat and /dev/null differ
+diff --git a/db/seg0/c1d1.dat b/db/seg0/c1d1.dat
+deleted file mode 100644
+index 451f02f..0000000
+Binary files a/db/seg0/c1d1.dat and /dev/null differ
+diff --git a/db/seg0/c1e0.dat b/db/seg0/c1e0.dat
+deleted file mode 100644
+index 761408d..0000000
+Binary files a/db/seg0/c1e0.dat and /dev/null differ
+diff --git a/db/seg0/c1f1.dat b/db/seg0/c1f1.dat
+deleted file mode 100644
+index 78d701f..0000000
+Binary files a/db/seg0/c1f1.dat and /dev/null differ
+diff --git a/db/seg0/c20.dat b/db/seg0/c20.dat
+deleted file mode 100644
+index e2d1a96..0000000
+Binary files a/db/seg0/c20.dat and /dev/null differ
+diff --git a/db/seg0/c200.dat b/db/seg0/c200.dat
+deleted file mode 100644
+index c3a7808..0000000
+Binary files a/db/seg0/c200.dat and /dev/null differ
+diff --git a/db/seg0/c211.dat b/db/seg0/c211.dat
+deleted file mode 100644
+index 54e1586..0000000
+Binary files a/db/seg0/c211.dat and /dev/null differ
+diff --git a/db/seg0/c221.dat b/db/seg0/c221.dat
+deleted file mode 100644
+index 59900bc..0000000
+Binary files a/db/seg0/c221.dat and /dev/null differ
+diff --git a/db/seg0/c230.dat b/db/seg0/c230.dat
+deleted file mode 100644
+index c5680a8..0000000
+Binary files a/db/seg0/c230.dat and /dev/null differ
+diff --git a/db/seg0/c241.dat b/db/seg0/c241.dat
+deleted file mode 100644
+index 063b601..0000000
+Binary files a/db/seg0/c241.dat and /dev/null differ
+diff --git a/db/seg0/c251.dat b/db/seg0/c251.dat
+deleted file mode 100644
+index 2eadd0d..0000000
+Binary files a/db/seg0/c251.dat and /dev/null differ
+diff --git a/db/seg0/c260.dat b/db/seg0/c260.dat
+deleted file mode 100644
+index 25f81fd..0000000
+Binary files a/db/seg0/c260.dat and /dev/null differ
+diff --git a/db/seg0/c271.dat b/db/seg0/c271.dat
+deleted file mode 100644
+index 51cde57..0000000
+Binary files a/db/seg0/c271.dat and /dev/null differ
+diff --git a/db/seg0/c281.dat b/db/seg0/c281.dat
+deleted file mode 100644
+index cfed875..0000000
+Binary files a/db/seg0/c281.dat and /dev/null differ
+diff --git a/db/seg0/c290.dat b/db/seg0/c290.dat
+deleted file mode 100644
+index a85589e..0000000
+Binary files a/db/seg0/c290.dat and /dev/null differ
+diff --git a/db/seg0/c2a1.dat b/db/seg0/c2a1.dat
+deleted file mode 100644
+index 8e2ed6a..0000000
+Binary files a/db/seg0/c2a1.dat and /dev/null differ
+diff --git a/db/seg0/c2b1.dat b/db/seg0/c2b1.dat
+deleted file mode 100644
+index 2a29692..0000000
+Binary files a/db/seg0/c2b1.dat and /dev/null differ
+diff --git a/db/seg0/c2c1.dat b/db/seg0/c2c1.dat
+deleted file mode 100644
+index 5511575..0000000
+Binary files a/db/seg0/c2c1.dat and /dev/null differ
+diff --git a/db/seg0/c2d0.dat b/db/seg0/c2d0.dat
+deleted file mode 100644
+index 981d5e7..0000000
+Binary files a/db/seg0/c2d0.dat and /dev/null differ
+diff --git a/db/seg0/c2e1.dat b/db/seg0/c2e1.dat
+deleted file mode 100644
+index 6d9ab65..0000000
+Binary files a/db/seg0/c2e1.dat and /dev/null differ
+diff --git a/db/seg0/c2f0.dat b/db/seg0/c2f0.dat
+deleted file mode 100644
+index d854b4b..0000000
+Binary files a/db/seg0/c2f0.dat and /dev/null differ
+diff --git a/db/seg0/c300.dat b/db/seg0/c300.dat
+deleted file mode 100644
+index 2053e01..0000000
+Binary files a/db/seg0/c300.dat and /dev/null differ
+diff --git a/db/seg0/c31.dat b/db/seg0/c31.dat
+deleted file mode 100644
+index f9294f5..0000000
+Binary files a/db/seg0/c31.dat and /dev/null differ
+diff --git a/db/seg0/c311.dat b/db/seg0/c311.dat
+deleted file mode 100644
+index f60c260..0000000
+Binary files a/db/seg0/c311.dat and /dev/null differ
+diff --git a/db/seg0/c321.dat b/db/seg0/c321.dat
+deleted file mode 100644
+index a9d7453..0000000
+Binary files a/db/seg0/c321.dat and /dev/null differ
+diff --git a/db/seg0/c331.dat b/db/seg0/c331.dat
+deleted file mode 100644
+index 85ee72b..0000000
+Binary files a/db/seg0/c331.dat and /dev/null differ
+diff --git a/db/seg0/c340.dat b/db/seg0/c340.dat
+deleted file mode 100644
+index d99b11a..0000000
+Binary files a/db/seg0/c340.dat and /dev/null differ
+diff --git a/db/seg0/c351.dat b/db/seg0/c351.dat
+deleted file mode 100644
+index f822f4c..0000000
+Binary files a/db/seg0/c351.dat and /dev/null differ
+diff --git a/db/seg0/c361.dat b/db/seg0/c361.dat
+deleted file mode 100644
+index b5c8f25..0000000
+Binary files a/db/seg0/c361.dat and /dev/null differ
+diff --git a/db/seg0/c371.dat b/db/seg0/c371.dat
+deleted file mode 100644
+index ad11f01..0000000
+Binary files a/db/seg0/c371.dat and /dev/null differ
+diff --git a/db/seg0/c380.dat b/db/seg0/c380.dat
+deleted file mode 100644
+index b12e8b0..0000000
+Binary files a/db/seg0/c380.dat and /dev/null differ
+diff --git a/db/seg0/c391.dat b/db/seg0/c391.dat
+deleted file mode 100644
+index 20408db..0000000
+Binary files a/db/seg0/c391.dat and /dev/null differ
+diff --git a/db/seg0/c3a1.dat b/db/seg0/c3a1.dat
+deleted file mode 100644
+index 2eb3e82..0000000
+Binary files a/db/seg0/c3a1.dat and /dev/null differ
+diff --git a/db/seg0/c3b1.dat b/db/seg0/c3b1.dat
+deleted file mode 100644
+index ccbf8ef..0000000
+Binary files a/db/seg0/c3b1.dat and /dev/null differ
+diff --git a/db/seg0/c3c0.dat b/db/seg0/c3c0.dat
+deleted file mode 100644
+index 4d061cf..0000000
+Binary files a/db/seg0/c3c0.dat and /dev/null differ
+diff --git a/db/seg0/c3d1.dat b/db/seg0/c3d1.dat
+deleted file mode 100644
+index 45c9fa2..0000000
+Binary files a/db/seg0/c3d1.dat and /dev/null differ
+diff --git a/db/seg0/c3e1.dat b/db/seg0/c3e1.dat
+deleted file mode 100644
+index 48f53e6..0000000
+Binary files a/db/seg0/c3e1.dat and /dev/null differ
+diff --git a/db/seg0/c3f1.dat b/db/seg0/c3f1.dat
+deleted file mode 100644
+index 08acdce..0000000
+Binary files a/db/seg0/c3f1.dat and /dev/null differ
+diff --git a/db/seg0/c400.dat b/db/seg0/c400.dat
+deleted file mode 100644
+index df881a1..0000000
+Binary files a/db/seg0/c400.dat and /dev/null differ
+diff --git a/db/seg0/c41.dat b/db/seg0/c41.dat
+deleted file mode 100644
+index 8a7977f..0000000
+Binary files a/db/seg0/c41.dat and /dev/null differ
+diff --git a/db/seg0/c411.dat b/db/seg0/c411.dat
+deleted file mode 100644
+index 8cfb84e..0000000
+Binary files a/db/seg0/c411.dat and /dev/null differ
+diff --git a/db/seg0/c421.dat b/db/seg0/c421.dat
+deleted file mode 100644
+index 714e329..0000000
+Binary files a/db/seg0/c421.dat and /dev/null differ
+diff --git a/db/seg0/c430.dat b/db/seg0/c430.dat
+deleted file mode 100644
+index 55c948d..0000000
+Binary files a/db/seg0/c430.dat and /dev/null differ
+diff --git a/db/seg0/c441.dat b/db/seg0/c441.dat
+deleted file mode 100644
+index 3948b2a..0000000
+Binary files a/db/seg0/c441.dat and /dev/null differ
+diff --git a/db/seg0/c451.dat b/db/seg0/c451.dat
+deleted file mode 100644
+index fe1ab73..0000000
+Binary files a/db/seg0/c451.dat and /dev/null differ
+diff --git a/db/seg0/c461.dat b/db/seg0/c461.dat
+deleted file mode 100644
+index e6d9854..0000000
+Binary files a/db/seg0/c461.dat and /dev/null differ
+diff --git a/db/seg0/c470.dat b/db/seg0/c470.dat
+deleted file mode 100644
+index c9f2eb1..0000000
+Binary files a/db/seg0/c470.dat and /dev/null differ
+diff --git a/db/seg0/c481.dat b/db/seg0/c481.dat
+deleted file mode 100644
+index 397b291..0000000
+Binary files a/db/seg0/c481.dat and /dev/null differ
+diff --git a/db/seg0/c51.dat b/db/seg0/c51.dat
+deleted file mode 100644
+index 6a8cc91..0000000
+Binary files a/db/seg0/c51.dat and /dev/null differ
+diff --git a/db/seg0/c60.dat b/db/seg0/c60.dat
+deleted file mode 100644
+index dfd3754..0000000
+Binary files a/db/seg0/c60.dat and /dev/null differ
+diff --git a/db/seg0/c71.dat b/db/seg0/c71.dat
+deleted file mode 100644
+index 200243f..0000000
+Binary files a/db/seg0/c71.dat and /dev/null differ
+diff --git a/db/seg0/c81.dat b/db/seg0/c81.dat
+deleted file mode 100644
+index af0f76c..0000000
+Binary files a/db/seg0/c81.dat and /dev/null differ
+diff --git a/db/seg0/c90.dat b/db/seg0/c90.dat
+deleted file mode 100644
+index 108da1e..0000000
+Binary files a/db/seg0/c90.dat and /dev/null differ
+diff --git a/db/seg0/ca1.dat b/db/seg0/ca1.dat
+deleted file mode 100644
+index 6d8ecc2..0000000
+Binary files a/db/seg0/ca1.dat and /dev/null differ
+diff --git a/db/seg0/cb1.dat b/db/seg0/cb1.dat
+deleted file mode 100644
+index 520bb6f..0000000
+Binary files a/db/seg0/cb1.dat and /dev/null differ
+diff --git a/db/seg0/cc0.dat b/db/seg0/cc0.dat
+deleted file mode 100644
+index 2268720..0000000
+Binary files a/db/seg0/cc0.dat and /dev/null differ
+diff --git a/db/seg0/cd1.dat b/db/seg0/cd1.dat
+deleted file mode 100644
+index d919a1b..0000000
+Binary files a/db/seg0/cd1.dat and /dev/null differ
+diff --git a/db/seg0/ce1.dat b/db/seg0/ce1.dat
+deleted file mode 100644
+index 299e0c4..0000000
+Binary files a/db/seg0/ce1.dat and /dev/null differ
+diff --git a/db/seg0/cf0.dat b/db/seg0/cf0.dat
+deleted file mode 100644
+index fb40ee4..0000000
+Binary files a/db/seg0/cf0.dat and /dev/null differ
+diff --git a/db/service.properties b/db/service.properties
+deleted file mode 100644
+index 3b3caed..0000000
+--- a/db/service.properties
++++ /dev/null
+@@ -1,23 +0,0 @@
+-#/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db
+-# ********************************************************************
+-# ***                Please do NOT edit this file.                 ***
+-# *** CHANGING THE CONTENT OF THIS FILE MAY CAUSE DATA CORRUPTION. ***
+-# ********************************************************************
+-#Fri May 18 10:41:25 WEST 2018
+-SysschemasIndex2Identifier=225
+-SyscolumnsIdentifier=144
+-SysconglomeratesIndex1Identifier=49
+-SysconglomeratesIdentifier=32
+-SyscolumnsIndex2Identifier=177
+-SysschemasIndex1Identifier=209
+-SysconglomeratesIndex3Identifier=81
+-SystablesIndex2Identifier=129
+-SyscolumnsIndex1Identifier=161
+-derby.serviceProtocol=org.apache.derby.database.Database
+-SysschemasIdentifier=192
+-derby.storage.propertiesId=16
+-SysconglomeratesIndex2Identifier=65
+-derby.serviceLocale=pt_PT
+-SystablesIdentifier=96
+-SystablesIndex1Identifier=113
+-#--- last line, don't put anything after this line ---
+diff --git a/derby.log b/derby.log
+index 83595ec..c8fc476 100644
+--- a/derby.log
++++ b/derby.log
+@@ -1,13 +1,19 @@
+ ----------------------------------------------------------------
+-Mon May 28 06:47:01 WEST 2018:
+-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-a549-19bd-000006c525f8 
+-on database directory /Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+-Loaded from file:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/lib/derby.jar
++Fri Jun 01 01:20:27 WEST 2018:
++Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-b8b7-8cb5-00000e466d28 
++on database directory /usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@266474c2 
++Loaded from file:/usr/lib/jvm/java-8-oracle/db/lib/derby.jar
+ java.vendor=Oracle Corporation
+-java.runtime.version=1.8.0_171-b11
+-user.dir=/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack
+-os.name=Mac OS X
+-os.arch=x86_64
+-os.version=10.13.4
++java.runtime.version=1.8.0_161-b12
++user.dir=/usr/users2/2015/up201505172/Desktop/sdis1718-blackjack
++os.name=Linux
++os.arch=amd64
++os.version=4.4.0-47-generic
+ derby.system.home=null
+ Database Class Loader started - derby.database.classpath=''
++----------------------------------------------------------------
++Fri Jun 01 01:20:27 WEST 2018: Shutting down Derby engine
++----------------------------------------------------------------
++Fri Jun 01 01:20:27 WEST 2018:
++Shutting down instance a816c00e-0163-b8b7-8cb5-00000e466d28 on database directory /usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@266474c2 
++----------------------------------------------------------------
+diff --git a/keys/.DS_Store b/keys/.DS_Store
+deleted file mode 100644
+index 5008ddf..0000000
+Binary files a/keys/.DS_Store and /dev/null differ
+diff --git a/src/client/MyClient.java b/src/client/MyClient.java
+index 537556a..24e59a8 100644
+--- a/src/client/MyClient.java
++++ b/src/client/MyClient.java
+@@ -81,11 +81,11 @@ public class MyClient {
+         boolean trustStoreCreated = false;
+         String aliasKeystore = "client";
+         String passwordKeystore = "sdisClient";
+-        String keyStorePath = "keys/client/keystoreClient";
++        String keyStorePath = "../keys/client/keystoreClient";
+         String keystoreFilename = "keystoreClient";
+ 
+         String passwordTruststore = "truststore";
+-        String trustStorePath = "keys/truststore";
++        String trustStorePath = "../keys/truststore";
+ 
+         File keystoreFile = new File(keyStorePath);
+         File truststoreFile = new File(trustStorePath);
+@@ -104,7 +104,7 @@ public class MyClient {
+         }
+ 
+         trustStore = KeyStore.getInstance("JKS");
+-        trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
++        trustStore.load(new FileInputStream("../keys/truststore"),"truststore".toCharArray());
+ 
+         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+         keyManagerFactory.init(keyStore, passwordKeystore.toCharArray());
+@@ -296,11 +296,13 @@ public class MyClient {
+                                 try {
+                                     System.out.print("Please enter your bet for this run (you have " + user.getCredits() + ")> ");
+                                     bet = scanner.nextInt();
+-                                    if (checkCredits(bet)) {
++                                    if (bet != 0) {
++                                      if (checkCredits(bet)) {
+                                         sendCommand("bet", String.valueOf(bet));
+                                         invalid = false;
+-                                    } else {
++                                      } else {
+                                         System.err.println("[ERROR] Amount not available, try again.");
++                                      }
+                                     }
+                                 } catch (Exception e) {
+                                     e.printStackTrace();
+@@ -814,6 +816,7 @@ public class MyClient {
+ 
+             //Get Response
+             if (connection.getResponseCode() == 201) {
++                user.setCredits(100);                    //the database already has this 100, forgot to update at the client
+                 connection.disconnect();
+                 return 0;
+             } else if (connection.getResponseCode() == 409) {
+diff --git a/src/com/MySSLConnectionFactory.java b/src/com/MySSLConnectionFactory.java
+index 05adc69..e25ecd3 100644
+--- a/src/com/MySSLConnectionFactory.java
++++ b/src/com/MySSLConnectionFactory.java
+@@ -28,7 +28,7 @@ public class MySSLConnectionFactory {
+              pb = new ProcessBuilder(commandKeystoreClient);
+         else pb = new ProcessBuilder(commandKeystoreServer);
+ 
+-        File serverDirectory = new File("keys/"+ aliasKeystore);
++        File serverDirectory = new File("../keys/"+ aliasKeystore);
+ 
+         if (!serverDirectory.exists())
+             serverDirectory.mkdir();
+@@ -83,7 +83,7 @@ public class MySSLConnectionFactory {
+             trustStoreCreated = true;
+         } else {
+             trustStore = KeyStore.getInstance("JKS");
+-            trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
++            trustStore.load(new FileInputStream("../keys/truststore"),"truststore".toCharArray());
+             //Not working currently: keytool error: java.lang.Exception: Certificate not imported, alias <keystoreServercert> already exists even after delete
+             if (trustStore.containsAlias(keystoreFilename+"cert")) {
+                 trustStore.deleteEntry(keystoreFilename + "cert");
+@@ -101,7 +101,7 @@ public class MySSLConnectionFactory {
+ 
+         ProcessBuilder pb = new ProcessBuilder(commandTruststore);
+ 
+-        File serverDirectory = new File("keys");
++        File serverDirectory = new File("../keys");
+ 
+         pb.directory(serverDirectory);
+ 
+diff --git a/src/server/MyDatabase.java b/src/server/MyDatabase.java
+index 3eeec47..f8c1f6d 100644
+--- a/src/server/MyDatabase.java
++++ b/src/server/MyDatabase.java
+@@ -3,7 +3,8 @@ package server;
+ import java.sql.*;
+ 
+ public class MyDatabase {
+-    private static String dbURL = "jdbc:derby:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db";
++    private static String dbURL = "jdbc:derby:../db";
++    // private static String dbURL = "jdbc:derby:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db";
+     //private static String dbURL = "jdbc:derby:D:/Data/GitHub/sdis1718-blackjack/db";
+     // jdbc Connection
+     private static Connection conn = null;
+diff --git a/src/server/MyServer.java b/src/server/MyServer.java
+index 77329ae..35ae129 100644
+--- a/src/server/MyServer.java
++++ b/src/server/MyServer.java
+@@ -20,7 +20,7 @@ import java.security.*;
+ import java.security.cert.CertificateException;
+ import java.util.*;
+ import java.util.regex.Matcher;
+-import java.util.regex.Pattern;
++import java.util.regex.Pattern;import java.net.InetAddress;
+ 
+ public class MyServer {
+     private static final int BACKLOG = 1;
+@@ -73,7 +73,10 @@ public class MyServer {
+ 
+     public MyServer(int port) throws IOException {
+         this.port = port;
+-        server = HttpsServer.create(new InetSocketAddress(HOSTNAME, port), BACKLOG);
++        InetAddress ap = InetAddress.getLocalHost();
++        InetSocketAddress ad = new InetSocketAddress(ap.getHostAddress(), port);
++        server = HttpsServer.create(ad, BACKLOG);
++        System.out.println(ap.getHostAddress());
+ 
+         DATABASE = new MyDatabase();
+         DATABASE.createConnection();
+@@ -84,7 +87,7 @@ public class MyServer {
+ 
+         String outIP = in.readLine(); //you get the IP as a String
+ 
+-        sslConnection = new MySSLConnectionFactory(HOSTNAME, outIP);
++        sslConnection = new MySSLConnectionFactory(ap.getHostAddress(), outIP);
+ 
+         myUtilities = new MyUtilities();
+ 
+@@ -116,11 +119,11 @@ public class MyServer {
+         boolean trustStoreCreated = false;
+         String aliasKeystore = "server";
+         String passwordKeystore = "sdisServer";
+-        String keyStorePath = "keys/server/keystoreServer";
++        String keyStorePath = "../keys/server/keystoreServer";
+         String keystoreFilename = "keystoreServer";
+ 
+         String passwordTruststore = "truststore";
+-        String trustStorePath = "keys/truststore";
++        String trustStorePath = "../keys/truststore";
+ 
+         File keystoreFile = new File(keyStorePath);
+         File truststoreFile = new File(trustStorePath);
+@@ -137,7 +140,7 @@ public class MyServer {
+         }
+ 
+         trustStore = KeyStore.getInstance("JKS");
+-        trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
++        trustStore.load(new FileInputStream("../keys/truststore"),"truststore".toCharArray());
+ 
+         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+         keyManagerFactory.init(keyStore, passwordKeystore.toCharArray());
