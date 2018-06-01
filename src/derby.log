@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Jun 01 01:02:45 WEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-b8a7-5b8a-00000e5eb7e0 
+on database directory /usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@659e0bfd 
+Loaded from file:/usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_161-b12
+user.dir=/usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/src
+os.name=Linux
+os.arch=amd64
+os.version=4.4.0-47-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

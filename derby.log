@@ -1,13 +1,19 @@
 ----------------------------------------------------------------
-Mon May 28 06:47:01 WEST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-a549-19bd-000006c525f8 
-on database directory /Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
-Loaded from file:/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack/lib/derby.jar
+Fri Jun 01 01:20:27 WEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-b8b7-8cb5-00000e466d28 
+on database directory /usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@266474c2 
+Loaded from file:/usr/lib/jvm/java-8-oracle/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_171-b11
-user.dir=/Users/igorsilveira/Documents/GitHub/sdis1718-blackjack
-os.name=Mac OS X
-os.arch=x86_64
-os.version=10.13.4
+java.runtime.version=1.8.0_161-b12
+user.dir=/usr/users2/2015/up201505172/Desktop/sdis1718-blackjack
+os.name=Linux
+os.arch=amd64
+os.version=4.4.0-47-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Jun 01 01:20:27 WEST 2018: Shutting down Derby engine
+----------------------------------------------------------------
+Fri Jun 01 01:20:27 WEST 2018:
+Shutting down instance a816c00e-0163-b8b7-8cb5-00000e466d28 on database directory /usr/users2/2015/up201505172/Desktop/sdis1718-blackjack/db with class loader sun.misc.Launcher$AppClassLoader@266474c2 
+----------------------------------------------------------------

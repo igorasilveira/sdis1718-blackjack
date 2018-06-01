@@ -20,7 +20,7 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern;import java.net.InetAddress;
 
 public class MyServer {
     private static final int BACKLOG = 1;
@@ -73,7 +73,10 @@ public class MyServer {
 
     public MyServer(int port) throws IOException {
         this.port = port;
-        server = HttpsServer.create(new InetSocketAddress(HOSTNAME, port), BACKLOG);
+        InetAddress ap = InetAddress.getLocalHost();
+        InetSocketAddress ad = new InetSocketAddress(ap.getHostAddress(), port);
+        server = HttpsServer.create(ad, BACKLOG);
+        System.out.println(ap.getHostAddress());
 
         DATABASE = new MyDatabase();
         DATABASE.createConnection();
@@ -84,7 +87,7 @@ public class MyServer {
 
         String outIP = in.readLine(); //you get the IP as a String
 
-        sslConnection = new MySSLConnectionFactory(HOSTNAME, outIP);
+        sslConnection = new MySSLConnectionFactory(ap.getHostAddress(), outIP);
 
         myUtilities = new MyUtilities();
 
@@ -116,11 +119,11 @@ public class MyServer {
         boolean trustStoreCreated = false;
         String aliasKeystore = "server";
         String passwordKeystore = "sdisServer";
-        String keyStorePath = "keys/server/keystoreServer";
+        String keyStorePath = "../keys/server/keystoreServer";
         String keystoreFilename = "keystoreServer";
 
         String passwordTruststore = "truststore";
-        String trustStorePath = "keys/truststore";
+        String trustStorePath = "../keys/truststore";
 
         File keystoreFile = new File(keyStorePath);
         File truststoreFile = new File(trustStorePath);
@@ -137,7 +140,7 @@ public class MyServer {
         }
 
         trustStore = KeyStore.getInstance("JKS");
-        trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+        trustStore.load(new FileInputStream("../keys/truststore"),"truststore".toCharArray());
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(keyStore, passwordKeystore.toCharArray());

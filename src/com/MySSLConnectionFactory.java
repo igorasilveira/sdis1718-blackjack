@@ -28,7 +28,7 @@ public class MySSLConnectionFactory {
              pb = new ProcessBuilder(commandKeystoreClient);
         else pb = new ProcessBuilder(commandKeystoreServer);
 
-        File serverDirectory = new File("keys/"+ aliasKeystore);
+        File serverDirectory = new File("../keys/"+ aliasKeystore);
 
         if (!serverDirectory.exists())
             serverDirectory.mkdir();
@@ -83,7 +83,7 @@ public class MySSLConnectionFactory {
             trustStoreCreated = true;
         } else {
             trustStore = KeyStore.getInstance("JKS");
-            trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+            trustStore.load(new FileInputStream("../keys/truststore"),"truststore".toCharArray());
             //Not working currently: keytool error: java.lang.Exception: Certificate not imported, alias <keystoreServercert> already exists even after delete
             if (trustStore.containsAlias(keystoreFilename+"cert")) {
                 trustStore.deleteEntry(keystoreFilename + "cert");
@@ -101,7 +101,7 @@ public class MySSLConnectionFactory {
 
         ProcessBuilder pb = new ProcessBuilder(commandTruststore);
 
-        File serverDirectory = new File("keys");
+        File serverDirectory = new File("../keys");
 
         pb.directory(serverDirectory);
 

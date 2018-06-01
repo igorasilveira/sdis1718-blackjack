@@ -81,11 +81,11 @@ public class MyClient {
         boolean trustStoreCreated = false;
         String aliasKeystore = "client";
         String passwordKeystore = "sdisClient";
-        String keyStorePath = "keys/client/keystoreClient";
+        String keyStorePath = "../keys/client/keystoreClient";
         String keystoreFilename = "keystoreClient";
 
         String passwordTruststore = "truststore";
-        String trustStorePath = "keys/truststore";
+        String trustStorePath = "../keys/truststore";
 
         File keystoreFile = new File(keyStorePath);
         File truststoreFile = new File(trustStorePath);
@@ -104,7 +104,7 @@ public class MyClient {
         }
 
         trustStore = KeyStore.getInstance("JKS");
-        trustStore.load(new FileInputStream("keys/truststore"),"truststore".toCharArray());
+        trustStore.load(new FileInputStream("../keys/truststore"),"truststore".toCharArray());
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(keyStore, passwordKeystore.toCharArray());
@@ -296,11 +296,13 @@ public class MyClient {
                                 try {
                                     System.out.print("Please enter your bet for this run (you have " + user.getCredits() + ")> ");
                                     bet = scanner.nextInt();
-                                    if (checkCredits(bet)) {
+                                    if (bet != 0) {
+                                      if (checkCredits(bet)) {
                                         sendCommand("bet", String.valueOf(bet));
                                         invalid = false;
-                                    } else {
+                                      } else {
                                         System.err.println("[ERROR] Amount not available, try again.");
+                                      }
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -814,6 +816,7 @@ public class MyClient {
 
             //Get Response
             if (connection.getResponseCode() == 201) {
+                user.setCredits(100);                    //the database already has this 100, forgot to update at the client
                 connection.disconnect();
                 return 0;
             } else if (connection.getResponseCode() == 409) {
