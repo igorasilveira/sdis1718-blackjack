@@ -1,27 +1,3 @@
-# Implementations List
-
-- [X] **Full Project**
-   - [X] **CLASSES**
-     - [X] Server
-     - [X] Client
-     - [X] Table
-     - [X] Player??
-     - [X] Deck (*of cards*)
-   - [X] **REST**
-     - [X] **POST**
-       - [X] Create *New* Table
-          - [X] Private
-          - [X] Public
-     - [X] **GET**
-       - [X] Retrieve *Available* Public Tables
-     - [X] **PUT**
-       - [X] Update Table's Game State
-       - [X] Alter Table's Player List
-         - [X] *Add* Player
-         - [X] *Remove* Player
-     - [X] **DELETE**
-       - [X] Remove Table *if empty*
-
 # Specification of the project 2 of SDIS-TP2
 
 ## Purpose of the Application
